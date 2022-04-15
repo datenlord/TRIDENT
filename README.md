@@ -17,7 +17,7 @@ The remainder of our project documentation is organized as follows: In Section 1
 
 In this section, we will introduce the repository of TRIDENT and how to deploy TRIDENT in the Filecoin application.
 
-## 4.1 TRIDENT Repository
+## 1.1 TRIDENT Repository
 
 The file directory structure of TRIDENT is shown below:
 
@@ -92,7 +92,7 @@ There are three main directories in TRIDENT:
   - poseidon.tar.gz:  the vivado project of the whole TRIDENT system
   - trident100MhzC1100.tar.gz:  bitstream file of TRIDENT which can be directly implemented in Xilinx Varium C1100 card
 
-## 4.2 Deployment
+## 1.2 Deployment
 
 There are mainly three ways to deploy the TRIDENT: 
 
@@ -133,7 +133,7 @@ The hardware Implementation of TRIDENT mainly includes two parts: Poseidon IP de
 
 In Section2, we will introduce the details of the design of the Poseidon accelerator IP. In general, the computation of Poseidon hasher can be perceived as a continuous stream of modular arithmetic operations. So the design of Poseidon IP is about two things: how to implement high performance-area ratio modular arithmetic circuits and then how to organize these arithmetic modules to achieve better utilization and throughput. Additionally, IP design and verification in TRIDENT are implemented through SpinalHDL and Cocotb, which improves the efficiency and quality of our design vastly. So we will first introduce the usage of SpinalHDL and Cocotb in TRIDENT.
 
-## 2.1 Digital Design With [SpinalHDL](https://github.com/SpinalHDL/SpinalHDL) And [Cocotb](https://github.com/cocotb/cocotb)
+## 3.1 Digital Design With [SpinalHDL](https://github.com/SpinalHDL/SpinalHDL) And [Cocotb](https://github.com/cocotb/cocotb)
 
 Spinal is a scala-based HCL(HCL: Hardware Construction Language) or more precisely a scala package featured in alige chip design, which is similar to chisel also based on scala and mostly used in RISC-V CPU design. The process of designing hardware in Spinal can be mainly divided into three steps: 1) use scala and Spinal package to describe the structure and logic of your hardware design; 2) compile and execute the scala program to generate corresponding System Verilog/VHDL codes, which describes the same structure as scala one; 3) using any kinds of simulators such as Iverilog, Verilator or Vivado simulator for hardware simulation and verification. A design flow of SpinalHDL is shown in the picture below:
 
@@ -181,10 +181,10 @@ Cocotb is a python-based testbench environment for verifying VHDL, Verilog, and 
 
 Besides the points we mentioned above, SpinalHDL and Cocotb still have a lot of advantages over traditional HDL in digital design and verification, which we believe will simplify FPGA design and promote the application of FPGA in many fields. But currently, SpinalHDL and Cocotb haven’t been fully supported by Vivado, for example, we can’t run cocotb testbench in Vivado simulator and it’s also troublesome to instantiate Xilinx IP in SpinalHDL. So we hope that Vivado and other Xilinx design tools can better support SpinalHDL and Cocotb in the future. 
 
-## 2.2 Modular Arithmetic Operator
+## 3.2 Modular Arithmetic Operator
 The detailed hardware design of arithmetic operators in TRIDENT is introduced in poseidon-spinal.
 
-## 2.3 Accelerator Architecture
+## 3.3 Accelerator Architecture
 The details of Poseidon IP's architecture are introduced in poseidon-spinal.
 
 # Section4: FPGA System Design
@@ -204,7 +204,7 @@ We implement the whole FPGA hardware system design through the Block design tool
 
 # Section5: Implementation And Performance
 
-## 3.1 Implementation Results:
+## 5.1 Implementation Results:
 
 The implementation result and performance of TRIDENT are shown in this Section. After implementation, the FPGA hardware resource utilization is shown in the table below. The shortage of DSP slices and LUTs used in modular multipliers is the main bottleneck in the design to achieve better performance.
 
@@ -226,9 +226,9 @@ The implementation result and performance of TRIDENT are shown in this Section. 
 **Timing Information:** 
 The working frequency of Poseidon IP is set at 100MHz and the timing report of Vivado implementation is shown below. The current design is just enough to meet the target frequency. And this frequency is still below our expectation of 250MHz, which is the output frequency of XDMA IP. In order to get a higher throughput, we will continue to improve it by cutting the critical path in our design.
 
-![device.png](images/timing.jpg)
+![timing.jpg](images/timing.jpg)
 
-## 3.2 Performance Of TRIDENT
+## 5.2 Performance Of TRIDENT
 
 In TRIDENT, two ways have been used to measure the performance of the whole system.
 
@@ -250,7 +250,7 @@ The second one: as we mention above, TRIDENT also provides a Rust-based software
 
 In the performance results above, we can see that TRIDENT‘s hash rate can achieve more than two times of CPU’s rate but still fall behind GPU‘s hash speed. But given the great power consumption of GPU, TRIDENT can still have a better performance-power ratio. And the power consumption of TRIDENT is shown in the picture below: 
 
-![power.png](TRIDENT%20A%20%206bf84/power.png)
+![power.png](images/power.png)
 
 We can see that the total On-chip power of FPGA is 24.823W and the maximum power consumption in the specification of RTX 3070 revealed on Nvidia’s official website is 220W. It’s obvious that FPGA is much more efficient than GPU in terms of performance-power ratio.
 
