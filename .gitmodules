@@ -1,0 +1,3 @@
+[submodule "poseidon-spinal"]
+	path = poseidon-spinal
+	url = https://github.com/datenlord/poseidon-spinal.git
